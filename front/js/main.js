@@ -1,5 +1,7 @@
 const randomNumber = new RandomNumber('#random-numbers');
 randomNumber.init();
 
-const ranking = new Ranking('#numbers-ranking');
+const passArrayWithNumbers = randomNumber.allDrawnNumbers;
+
+const ranking = new Ranking('#numbers-ranking', passArrayWithNumbers);
 ranking.init();

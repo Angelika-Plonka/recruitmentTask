@@ -2,8 +2,10 @@ class RandomNumber extends Component {
     constructor(selector) {
         super(selector);
         this.randomNumbers = [];
+        this.allDrawnNumbers = [];
     }
 
+    // I wasn't sure if I can remove this fetch-axios section and that's why I leave it
     init() {
         setInterval(() => {
             axios.get('http://localhost:3000/random-numbers')
@@ -18,29 +20,26 @@ class RandomNumber extends Component {
                 .catch(error => {
                     console.error(error);
                 })
-        },10000);
+        }, 10000);
     }
 
     render() {
         const container = this.getDOMElement();
 
         this.randomNumbers.forEach(number => {
-            const parentElem = document.querySelector(this.selector);
+            const parentElem = this.getDOMElement();
             this.allDrawnNumbers.push(number.id);
 
-            if(parentElem.children.length < 5){
-                const element = document.createElement('span');
-                element.classList.add('list-group-item');
-                element.innerHTML = number.id;
+            const element = document.createElement('span');
+            element.classList.add('list-group-item');
+            element.innerHTML = number.id;
+
+            if (parentElem.children.length < 5) {
                 container.appendChild(element);
-            }else{
+            } else {
                 parentElem.innerHTML = '';
-                const element = document.createElement('span');
-                element.classList.add('list-group-item');
-                element.innerHTML = number.id;
                 container.appendChild(element);
             }
-
         });
     }
 }

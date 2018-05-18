@@ -1,7 +1,9 @@
 class Ranking extends Component {
-    constructor(selector) {
+    constructor(selector, allDrawnNumbers) {
         super(selector);
         this.numbers = [];
+        this.firstFetchNumbers = [];
+        this.allDrawnNumbers = allDrawnNumbers;
     }
 
     init() {
@@ -25,11 +27,32 @@ class Ranking extends Component {
         const container = this.getDOMElement();
 
         this.numbers.forEach(number => {
-            const listElement = document.createElement('li');
-            listElement.classList.add('list-group-item');
-            listElement.innerHTML = number.id;
-
-            container.appendChild(listElement);
+            const tableData = document.createElement('li');
+            tableData.classList.add('list-group-item');
+            tableData.innerHTML = number.id;
+            container.appendChild(tableData);
+            this.firstFetchNumbers.push(number.id);
         });
+
+        setInterval(() => {
+            container.innerHTML = '';
+            let repeatNumbers = this.allDrawnNumbers.reduce(function (obj, b) {
+                obj[b] = ++obj[b] || 1;
+                return obj;
+            }, {});
+
+            let repeatNumbersSortedByValue = Object.keys(repeatNumbers).sort(function (a, b) {
+                return repeatNumbers[b] - repeatNumbers[a]
+            });
+
+            repeatNumbersSortedByValue.forEach(key => {
+                const listElement = document.createElement('td');
+                listElement.classList.add('list-group-item');
+                listElement.innerHTML = key;
+                container.appendChild(listElement);
+                this.firstFetchNumbers.push(key);
+            });
+
+        }, 10000);
     }
 }
