@@ -5,7 +5,6 @@ class RandomNumber extends Component {
         this.allDrawnNumbers = [];
     }
 
-    // I wasn't sure if I can remove this fetch-axios section and that's why I leave it
     init() {
         setInterval(() => {
             axios.get('http://localhost:3000/random-numbers')

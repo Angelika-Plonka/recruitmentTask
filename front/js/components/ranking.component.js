@@ -6,6 +6,7 @@ class Ranking extends Component {
         this.allDrawnNumbers = allDrawnNumbers;
     }
 
+    // I wasn't sure if I can remove this fetch-axios section and that's why I leave it
     init() {
         axios.get('http://localhost:3000/numbers')
             .then(response => {
